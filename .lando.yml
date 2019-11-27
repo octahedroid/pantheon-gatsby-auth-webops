@@ -1,25 +1,30 @@
 name: gatsby-auth-webops
 
 proxy:
-  gatsby:
-    - gatsby-auth-webops.lndo.site:8000
+  appserver:
+    - gatsby-auth-webops.lndo.site
 
 services:
-  gatsby:
+  appserver:
     type: "node:10"
-    port: 8000
     globals:
       gatsby-cli: latest
       firebase-tools: latest
     build:
-      - "npm install"
+      - "yarn install"
     command:
-      - "gatsby develop --host 0.0.0.0"
+      - "gatsby develop --host 0.0.0.0 --port 80"
 
 tooling:
-  gatsby:
-    service: gatsby
   firebase:
-    service: gatsby
+    service: appserver
+  yarn:
+    service: appserver
   npm:
-    service: gatsby
+    cmd: Nope, try `lando yarn` instead.
+    service: appserver
+  gatsby:
+    service: appserver
+  gatsby:start:
+    cmd: gatsby develop --host 0.0.0.0 --port 80
+    service: appserver
