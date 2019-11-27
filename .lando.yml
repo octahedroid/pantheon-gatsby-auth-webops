@@ -1,0 +1,25 @@
+name: gatsby-auth-webops
+
+proxy:
+  gatsby:
+    - gatsby-auth-webops.lndo.site:8000
+
+services:
+  gatsby:
+    type: "node:10"
+    port: 8000
+    globals:
+      gatsby-cli: latest
+      firebase-tools: latest
+    build:
+      - "npm install"
+    command:
+      - "gatsby develop --host 0.0.0.0"
+
+tooling:
+  gatsby:
+    service: gatsby
+  firebase:
+    service: gatsby
+  npm:
+    service: gatsby
