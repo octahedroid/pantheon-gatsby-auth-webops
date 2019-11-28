@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useThemeUI } from "theme-ui";
 /** @jsx jsx */
 import { jsx } from "theme-ui";
-import { Link } from "gatsby";
+import { Link, useStaticQuery, graphql } from "gatsby";
 import { TiThMenuOutline } from "react-icons/ti";
 import Navbar from "gatsby-theme-octahedroid/src/components/navbar";
 import { Auth } from "../auth/context";
@@ -11,6 +11,21 @@ import LogoutLink from "./logout-link";
 
 const Header = ({ scrolled, handleShowSidebar }) => {
   const { theme } = useThemeUI();
+
+  const pages = useStaticQuery(graphql`
+    {
+      allNodePage {
+        edges {
+          node {
+            path {
+              alias
+            }
+            title
+          }
+        }
+      }
+    }
+  `);
   return (
     <Auth.Consumer>
       {({ user, handleLogout }) => (
@@ -42,7 +57,8 @@ const Header = ({ scrolled, handleShowSidebar }) => {
                   {
                     name: "Home",
                     route: "/"
-                  }
+                  },
+                  ...(pages.allNodePage.edges.map(({node})=>({name: node.title, route: node.path.alias})))
                 ]}
               />
             </div>

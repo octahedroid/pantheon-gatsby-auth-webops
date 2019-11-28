@@ -33,7 +33,7 @@ exports.createPages = ({ graphql, actions }) => {
     articles.forEach(article => {
       createPage({
         path: article.node.path.alias,
-        component: path.resolve(`./src/templates/privateArticle.js`),
+        component: path.resolve(`./src/templates/article.js`),
         context: {
           slug: article.node.path.alias
         }

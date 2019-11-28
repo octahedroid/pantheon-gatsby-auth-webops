@@ -1,11 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { graphql } from 'gatsby'
+import { graphql } from "gatsby";
 import Layout from "../components/layout";
 import SEO from "gatsby-theme-octahedroid/src/components/seo";
-import PrivateContent from '../components/private-content';
+import PrivateContent from "../components/private-content";
 import HeroCta from "gatsby-theme-octahedroid/src/components/hero-cta";
 
+import { Auth } from "../auth/context";
 // use this template when generating nodes with flag private
 const ArticleTemplate = ({ data }) => {
   const { post } = data;
@@ -16,15 +17,20 @@ const ArticleTemplate = ({ data }) => {
         keywords={[`gatsby`, `tailwind`, `react`, `tailwindcss`]}
       />
       <div className="container mx-auto">
-        <HeroCta
-          title={post.title}
-          intro={post.created}
-        />
+        <HeroCta title={post.title} intro={post.created} />
         <hr className="border-b-2 mx-auto w-2/3 border-gray-200 block h-1" />
-        <div
-          className="py-3 lg:py-4"
-          dangerouslySetInnerHTML={{ __html: post.body.summary }}
-        ></div>
+        <p className="py-3 lg:py-4 text-lg text-black">{post.field_teaser}</p>
+        <Auth.Consumer>
+          {({ token, isLoggedIn, fetchPrivateContent }) => (
+            <PrivateContent
+              id={post.drupal_id}
+              type={post.relationships.node_type.drupal_internal__type}
+              token={token}
+              isLoggedIn={isLoggedIn}
+              fetchPrivateContent={fetchPrivateContent}
+            />
+          )}
+        </Auth.Consumer>
       </div>
     </Layout>
   );
@@ -32,21 +38,23 @@ const ArticleTemplate = ({ data }) => {
 
 ArticleTemplate.propTypes = {};
 
-
 export default ArticleTemplate;
 
 export const pageQuery = graphql`
   query post($slug: String!) {
-    post: nodeArticle(path: {alias: {eq: $slug}}) {
-      id
+    post: nodeArticle(path: { alias: { eq: $slug } }) {
+      drupal_id
       title
-      path {  
+      path {
         alias
       }
-      body{
-        summary
+      field_teaser
+      relationships {
+        node_type {
+          drupal_internal__type
+        }
       }
       created(formatString: "MMM d, YYYY")
     }
   }
-`
+`;

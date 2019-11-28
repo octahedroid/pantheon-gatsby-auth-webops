@@ -46,7 +46,7 @@ export const pageQuery = graphql`
       path {  
         alias
       }
-      body {
+      body{
         processed
       }
       created(formatString: "MMM d, YYYY")
