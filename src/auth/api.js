@@ -1,9 +1,4 @@
 
-const dotenv = require('dotenv')
-dotenv.config({
-  path: `.env.${process.env.NODE_ENV}`,
-})
-
 // connect to drupal api
 export const isLoggedIn = () => {
   if (typeof window === 'undefined') {
