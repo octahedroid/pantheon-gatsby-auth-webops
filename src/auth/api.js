@@ -52,7 +52,7 @@ const fetchOauthToken = async (username, password, scope) => {
   formData.append('username', username);
   formData.append('password', password);
 
-  const response = await fetch(process.env.DRUPAL_AUTH, {
+  const response = await fetch(`${process.env.DRUPAL_URL}/oauth/token`, {
     method: 'post',
     headers: new Headers({
       'Accept': 'application/json',
@@ -80,7 +80,7 @@ const refreshOauthToken = async (token, scope) => {
     formData.append('scope', scope);
     formData.append('refresh_token', token.refresh_token);
 
-    const response = await fetch(process.env.DRUPAL_AUTH, {
+    const response = await fetch(`${process.env.DRUPAL_URL}/oauth/token`, {
       method: 'post',
       headers: new Headers({
         'Accept': 'application/json',
@@ -109,31 +109,8 @@ const storeToken = (json) => {
   return token;
 }
 
-
 export const fetchUserInfo = async (token) => {
-  
-  const response = await fetch('https://dev-auth-webops.pantheonsite.io/oauth/debug?_format=json', {
-    method: 'get',
-    headers: new Headers({
-      'Authorization': `Bearer ${token.access_token}`,
-      'Accept': 'application/json',
-    }),
-  });
-  if (response.ok) {
-    const json = await response.json();
-    const userData = await fetchUserById(json.id, token)
-    if (json.error) {
-      throw new Error(json.error.message);
-    }
-
-    return userData;
-  }
-};
-
-
-export const fetchUserById = async (id, token) => {
-  
-  const response = await fetch(`https://dev-auth-webops.pantheonsite.io/api/user/user?filter[drupal_internal__uid]=${id}`, {
+  const response = await fetch(`${process.env.DRUPAL_URL}/oauth/me`, {
     method: 'get',
     headers: new Headers({
       'Authorization': `Bearer ${token.access_token}`,
@@ -145,14 +122,14 @@ export const fetchUserById = async (id, token) => {
     if (json.error) {
       throw new Error(json.error.message);
     }
+
     return json
   }
 };
 
-
 export const fetchPrivateContent = async (id, type, token) => {
   
-  const response = await fetch(`https://dev-auth-webops.pantheonsite.io/api/node/${type}/${id}`, {
+  const response = await fetch(`${process.env.DRUPAL_URL}/api/node/${type}/${id}`, {
     method: 'get',
     headers: new Headers({
       'Authorization': `Bearer ${token.access_token}`,

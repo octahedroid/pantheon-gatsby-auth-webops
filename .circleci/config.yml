@@ -41,7 +41,7 @@ jobs:
             touch .env.production
             echo "CLIENT_ID=$CLIENT_ID" >> .env.production
             echo "CLIENT_SECRET=$CLIENT_SECRET" >> .env.production
-            echo "DRUPAL_AUTH=$DRUPAL_AUTH" >> .env.production
+            echo "DRUPAL_URL=$DRUPAL_URL" >> .env.production
 
       - run:
           name: Gatsby Build

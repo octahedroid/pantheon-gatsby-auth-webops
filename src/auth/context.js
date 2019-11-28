@@ -19,11 +19,10 @@ const AuthContext = ({ children }) => {
         token,
         handleLogin: async (username, password) => {
           const token = await handleDrupalLogin(username, password, "gatsby");
-          console.log(token);
           if (token) {
             setToken(token);
             const user = await fetchUserInfo(token);
-            setUser(user.data[0]);
+            setUser(user);
           }
           return user;
         },
@@ -32,7 +31,7 @@ const AuthContext = ({ children }) => {
           if (token) {
             setToken(token);
             const user = await fetchUserInfo(token);
-            setUser(user.data[0]);
+            setUser(user);
           }
           return token;
         },
@@ -44,7 +43,7 @@ const AuthContext = ({ children }) => {
         fetchUserData: async () => {
           const token = await isLoggedIn();
           const user = await fetchUserInfo(token);
-          setUser(user.data[0]);
+          setUser(user);
         },
         fetchPrivateContent
       }}
