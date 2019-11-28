@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import cx from "classnames";
 
 const LogoutLink = ({ active, user, handleLogout }) => {
-  console.log(user);
   return (
     <>
       {user && (

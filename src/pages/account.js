@@ -17,7 +17,7 @@ function AccountPage() {
         ({user, token, isLoggedIn})=>{
           if(!token){
             isLoggedIn()
-            navigate('/login')
+            if (typeof window !== `undefined`) navigate('/login')
           }
           return (
           <div className="container mx-auto mt-6">
