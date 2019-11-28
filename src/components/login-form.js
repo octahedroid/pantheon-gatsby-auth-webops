@@ -1,19 +1,20 @@
 import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "../auth/context";
+import { Auth } from "../auth/context";
+
 const login = props => {
   const [state, setState] = useState({});
-  const Auth = useContext(AuthContext);
+  const AuthContext = useContext(Auth);
 
   const handleSubmit = async event => {
     event.preventDefault();
-    setState({ processing: true });
     const { username, password } = state;
+    setState({ ...state, processing: true });
 
     try {
-      await Auth.handleLogin(username, password, "");
-      setState({ processing: false });
-      Auth.updateAuthenticatedUserState(true);
+      const resp = await AuthContext.handleLogin(username, password, "");
+      
+      setState({ ...state, processing: false, error: false });
     } catch (err) {
       setState({
         processing: false,
@@ -25,41 +26,56 @@ const login = props => {
   return (
     <div className=" py-4">
       {state.error && (
-        <div className="text-red-500 text-lg text-center">{error}</div>
+        <div className="text-red-500 text-lg text-center">{state.error}</div>
       )}
-      <h3 className="text-primary text-xl font-bold mb-3">Enter your username and password below to log in.</h3>
-      {state.processing ? (
-        <div>Loading ...</div>
-      ) : (
-        <form
-          onSubmit={event => handleSubmit(event)}
-          className="flex flex-col py-4"
-        >
-          <label className="w-full text-lg text-primary">Username:</label>
-          <input
-            className="w-full p-3 text-lg"
-            type="text"
-            name="username"
-            onChange={event =>
-              setState({ [event.target.name]: event.target.value })
-            }
-          />
-          <label className="w-full text-lg text-primary">Password:</label>
-          <input
-            className="w-full p-3 text-lg"
-            type="password"
-            name="password"
-            onChange={event =>
-              setState({ [event.target.name]: event.target.value })
-            }
-          />
-          <input
-            className="p-3 bg-secondary text-white mt-4 rounded"
-            type="submit"
-            value="Log in"
-            onClick={event => handleSubmit(event)}
-          />
-        </form>
+      {AuthContext.user && (
+        <h2 className="text-xl text-green-500">User Logged in</h2>
+      )}
+      {!AuthContext.user && (
+        <>
+          <h3 className="text-secondary text-xl font-bold mb-3">
+            Enter your username and password below to log in.
+          </h3>
+          {state.processing ? (
+            <div>Loading ...</div>
+          ) : (
+            <form
+              onSubmit={event => handleSubmit(event)}
+              className="flex flex-col py-4"
+            >
+              <label className="w-full text-lg text-primary">Username:</label>
+              <input
+                className="w-full p-3 text-lg"
+                type="text"
+                name="username"
+                onChange={event =>
+                  setState({
+                    ...state,
+                    [event.target.name]: event.target.value
+                  })
+                }
+              />
+              <label className="w-full text-lg text-primary">Password:</label>
+              <input
+                className="w-full p-3 text-lg"
+                type="password"
+                name="password"
+                onChange={event =>
+                  setState({
+                    ...state,
+                    [event.target.name]: event.target.value
+                  })
+                }
+              />
+              <input
+                className="p-3 bg-secondary text-white mt-4 rounded"
+                type="submit"
+                value="Log in"
+                onClick={event => handleSubmit(event)}
+              />
+            </form>
+          )}
+        </>
       )}
     </div>
   );

@@ -16,6 +16,13 @@ module.exports = {
         root: __dirname,
         themePath: `${__dirname}/theme`
       }
-    }
+    },
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://dev-auth-webops.pantheonsite.io/`,
+        apiBase: `api`, // optional, defaults to `jsonapi`
+      },
+    },
   ]
 };

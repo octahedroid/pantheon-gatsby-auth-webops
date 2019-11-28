@@ -2,3 +2,5 @@
 public
 node_modules
 .firebase
+.env.development
+.env.production

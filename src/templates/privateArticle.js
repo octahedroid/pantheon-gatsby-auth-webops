@@ -17,17 +17,14 @@ const ArticleTemplate = ({ data }) => {
       />
       <div className="container mx-auto">
         <HeroCta
-          title={post.frontmatter.title}
-          text={post.frontmatter.excerpt}
-          intro={post.frontmatter.date}
-          imageName={post.frontmatter.image}
+          title={post.title}
+          intro={post.created}
         />
         <hr className="border-b-2 mx-auto w-2/3 border-gray-200 block h-1" />
         <div
           className="py-3 lg:py-4"
-          dangerouslySetInnerHTML={{ __html: post.summary }}
+          dangerouslySetInnerHTML={{ __html: post.body.summary }}
         ></div>
-        <PrivateContent contentId={0} />
       </div>
     </Layout>
   );
@@ -37,3 +34,19 @@ ArticleTemplate.propTypes = {};
 
 
 export default ArticleTemplate;
+
+export const pageQuery = graphql`
+  query post($slug: String!) {
+    post: nodeArticle(path: {alias: {eq: $slug}}) {
+      id
+      title
+      path {  
+        alias
+      }
+      body{
+        summary
+      }
+      created(formatString: "MMM d, YYYY")
+    }
+  }
+`
