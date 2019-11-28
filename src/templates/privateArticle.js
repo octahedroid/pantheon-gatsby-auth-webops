@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-
+import { graphql } from 'gatsby'
 import Layout from "../components/layout";
 import SEO from "gatsby-theme-octahedroid/src/components/seo";
 import PrivateContent from '../components/private-content';
