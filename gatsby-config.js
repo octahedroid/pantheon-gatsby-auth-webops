@@ -1,3 +1,14 @@
+
+const dotenv = require('dotenv')
+
+dotenv.config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
+console.info(process.env.CLIENT_ID)
+console.info(process.env.CLIENT_SECRET)
+console.info(process.env.DRUPAL_AUTH)
+
 module.exports = {
   siteMetadata: {
     title: `Octahedroid`,
