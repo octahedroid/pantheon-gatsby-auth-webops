@@ -148,6 +148,26 @@ export const fetchUserById = async (id, token) => {
     if (json.error) {
       throw new Error(json.error.message);
     }
-    return json
+  }
+};
+
+
+export const fetchPrivateContent = async (id, type, token) => {
+  
+  const response = await fetch(`https://dev-auth-webops.pantheonsite.io/api/node/${type}/${id}`, {
+    method: 'get',
+    headers: new Headers({
+      'Authorization': `Bearer ${token.access_token}`,
+      'Accept': 'application/json',
+    }),
+  });
+
+  if (response.ok) {
+    const json = await response.json();
+    if (json.error) {
+      throw new Error(json.error.message);
+    }
+
+    return json;
   }
 };
