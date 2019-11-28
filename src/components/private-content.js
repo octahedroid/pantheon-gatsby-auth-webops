@@ -13,7 +13,7 @@ const PrivateContent = ({ id, type, user, token, isLoggedIn, fetchPrivateContent
     }
     if(token){
       fetchPrivateContent(id, type, token).then((response)=>{
-        setPrivateContent(response.data.attributes.body.processed)
+        setPrivateContent(response.data.attributes.field_body.processed)
       })
     }
 

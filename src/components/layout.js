@@ -4,7 +4,8 @@ import PropTypes from "prop-types";
 import Header from "../components/header";
 import SEO from "gatsby-theme-octahedroid/src/components/seo";
 import ThemeProvider from "gatsby-theme-octahedroid/src/components/theme-provider";
-import theme from '../../theme';
+import theme from "../../theme";
+import { Auth } from "../auth/context";
 
 function Layout({ children, title }) {
   const [scrolledMenu, setScrolledMenu] = useState(false);
@@ -25,14 +26,23 @@ function Layout({ children, title }) {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="pt-5">
-        <SEO title={title} />
-        <Header
-          scrolled={scrolledMenu}
-          handleShowSidebar={handleShowSidebar}
-        />
-        {children}
-      </div>
+      <Auth.Consumer>
+        {({ token, isLoggedIn }) => {
+          if(!token){
+            isLoggedIn()
+          }
+          return (
+            <div className="pt-5">
+              <SEO title={title} />
+              <Header
+                scrolled={scrolledMenu}
+                handleShowSidebar={handleShowSidebar}
+              />
+              {children}
+            </div>
+          );
+        }}
+      </Auth.Consumer>
     </ThemeProvider>
   );
 }

@@ -92,13 +92,12 @@ const refreshOauthToken = async (token, scope) => {
       const json = await response.json();
 
       if (json.error) {
-        //throw new Error(json.error.message);
+        throw new Error(json.error.message);
       }
 
       return storeToken(json);
     }
 
-    //throw new Error(response.status);
   }
 };
 
@@ -120,7 +119,6 @@ export const fetchUserInfo = async (token) => {
       'Accept': 'application/json',
     }),
   });
-
   if (response.ok) {
     const json = await response.json();
     const userData = await fetchUserById(json.id, token)
@@ -142,12 +140,12 @@ export const fetchUserById = async (id, token) => {
       'Accept': 'application/json',
     }),
   });
-
   if (response.ok) {
     const json = await response.json();
     if (json.error) {
       throw new Error(json.error.message);
     }
+    return json
   }
 };
 

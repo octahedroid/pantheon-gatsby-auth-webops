@@ -15,9 +15,7 @@ const TeasersList = () => {
               alias
             }
             title
-            body{
-              summary
-            }
+            field_teaser
           }
         }
       }
@@ -33,7 +31,7 @@ const TeasersList = () => {
                 title={node.title}
                 image="hero.png"
                 link={node.path.alias}
-                text={node.body.summary}
+                text={node.field_teaser}
                 ctaText="Read more..."
               />
             </div>
