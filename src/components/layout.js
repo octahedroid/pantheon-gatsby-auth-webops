@@ -5,7 +5,6 @@ import Header from "../components/header";
 import SEO from "gatsby-theme-octahedroid/src/components/seo";
 import ThemeProvider from "gatsby-theme-octahedroid/src/components/theme-provider";
 import theme from '../../theme';
-import {AuthContext, authContextState} from '../auth/context';
 
 function Layout({ children, title }) {
   const [scrolledMenu, setScrolledMenu] = useState(false);
@@ -26,16 +25,14 @@ function Layout({ children, title }) {
 
   return (
     <ThemeProvider theme={theme}>
-      <AuthContext.Provider value={authContextState}>
-        <div className="pt-5">
-          <SEO title={title} />
-          <Header
-            scrolled={scrolledMenu}
-            handleShowSidebar={handleShowSidebar}
-          />
-          {children}
-        </div>
-      </AuthContext.Provider>
+      <div className="pt-5">
+        <SEO title={title} />
+        <Header
+          scrolled={scrolledMenu}
+          handleShowSidebar={handleShowSidebar}
+        />
+        {children}
+      </div>
     </ThemeProvider>
   );
 }
