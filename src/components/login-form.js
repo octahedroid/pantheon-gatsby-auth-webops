@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import { Auth } from "../auth/context";
+import ArticlePlaceHolder from './article-placeholder';
 
 const login = props => {
   const [state, setState] = useState({});
@@ -37,7 +38,7 @@ const login = props => {
             Enter your username and password below to log in.
           </h3>
           {state.processing ? (
-            <div>Loading ...</div>
+            <ArticlePlaceHolder />
           ) : (
             <form
               onSubmit={event => handleSubmit(event)}

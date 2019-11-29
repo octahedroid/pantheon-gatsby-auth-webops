@@ -3,7 +3,7 @@ module.exports = {
   siteMetadata: {
     title: `Octahedroid`,
     description: `We do JAMstack`,
-    author: `@jmolivas`,
+    author: `@OctahedroidHQ`,
     github: `https://github.com/octahedroid`,
     blog: `/#`,
     product: `/#`,
