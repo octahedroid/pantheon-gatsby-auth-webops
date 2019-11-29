@@ -45,7 +45,7 @@ const login = props => {
             >
               <label className="w-full text-lg text-primary">Username:</label>
               <input
-                className="w-full p-3 text-lg"
+                className="w-full p-3 text-lg border-gray-300 border"
                 type="text"
                 name="username"
                 onChange={event =>
@@ -57,7 +57,7 @@ const login = props => {
               />
               <label className="w-full text-lg text-primary">Password:</label>
               <input
-                className="w-full p-3 text-lg"
+                className="w-full p-3 text-lg border-gray-300 border"
                 type="password"
                 name="password"
                 onChange={event =>

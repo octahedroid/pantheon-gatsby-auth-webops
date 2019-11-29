@@ -15,7 +15,7 @@ function LoginPage() {
       <div className="container mx-auto mt-6">
         <PageTitle centered intro="User Login" title="More content ahead" />
         <div className="w-1/3">
-        <LoginForm />
+          <LoginForm />
         </div>
       </div>
     </Layout>
