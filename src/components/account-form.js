@@ -8,17 +8,17 @@ const AccountForm = ({user, token, updateUserProfile}) => {
   const handleSubmit = async event => {
     event.preventDefault();
     const { displayName } = state;
-    setState({ ...state, processing: true });
+    // setState({ ...state, processing: true });
 
     try {
       const resp = await updateUserProfile(token, user.id, displayName);
       
-      setState({ ...state, processing: false, error: false });
+      // setState({ ...state, processing: false, error: false });
     } catch (err) {
-      setState({
-        processing: false,
-        error: "Unable to complete your login request."
-      });
+      // setState({
+      //   processing: false,
+      //   error: "Unable to complete your update request."
+      // });
     }
   };
 
