@@ -21,11 +21,12 @@ const ArticleTemplate = ({ data }) => {
         <hr className="border-b-2 mx-auto w-2/3 border-gray-200 block h-1" />
         <p className="py-3 lg:py-4 text-lg text-black">{post.field_teaser}</p>
         <Auth.Consumer>
-          {({ token, isLoggedIn, fetchPrivateContent }) => (
+          {({ token, user, isLoggedIn, fetchPrivateContent }) => (
             <PrivateContent
               id={post.drupal_id}
               type={post.relationships.node_type.drupal_internal__type}
               token={token}
+              user={user}
               isLoggedIn={isLoggedIn}
               fetchPrivateContent={fetchPrivateContent}
             />

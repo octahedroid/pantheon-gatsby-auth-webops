@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import CtaBlock from "gatsby-theme-octahedroid/src/components/cta-block";
-
+import LoginForm from './login-form';
+import Title from 'gatsby-theme-octahedroid/src/components/title'
 // check for user credentials here and fetch content if valid or show login link
 const PrivateContent = ({ id, type, user, token, isLoggedIn, fetchPrivateContent }) => {
   const [privateContent, setPrivateContent] = useState("<p>loading</p>")
@@ -13,7 +13,8 @@ const PrivateContent = ({ id, type, user, token, isLoggedIn, fetchPrivateContent
     }
     if(token){
       fetchPrivateContent(id, type, token).then((response)=>{
-        setPrivateContent(response.data.attributes.field_body.processed)
+        if(response.data.attributes.field_body)
+          setPrivateContent(response.data.attributes.field_body.processed)
       })
     }
 
@@ -23,11 +24,14 @@ const PrivateContent = ({ id, type, user, token, isLoggedIn, fetchPrivateContent
 
   return (
     <>
-      {token && <div
+      {(token&&user) && <div
         className="py-1 lg:py-2"
         dangerouslySetInnerHTML={{ __html: privateContent }}
       ></div>}
-      {!token && <CtaBlock text="Sign in with your Drupal account to gain instant access to our entire library." ctaText="Log in" link="/login" />}
+      {!token && <div className="bg-lightShade p-4 rounded">
+        <Title as="h3">Sign in with your Drupal account to gain instant access to our entire library.</Title>
+        <LoginForm />
+      </div>}
     </>
   );
 };
