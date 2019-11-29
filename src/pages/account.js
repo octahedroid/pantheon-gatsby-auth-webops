@@ -26,7 +26,7 @@ function AccountPage() {
                 <PageTitle intro="My Account" title="This is your info" />
               </div>
               <div className="flex-grow mr-4">
-                <AccountForm user={user} />
+                {user&&<AccountForm user={user} />}
               </div>
               <div className="w-1/2 p-4 bg-lightShade">
                 {!_isEmpty(user) &&
