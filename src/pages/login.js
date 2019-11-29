@@ -13,7 +13,7 @@ function LoginPage() {
         keywords={[`gatsby`, `tailwind`, `react`, `tailwindcss`]}
       />
       <div className="container mx-auto mt-6">
-        <PageTitle centered intro="User Login" title="More content ahead" />
+        <PageTitle centered title="Login page" />
         <div className="w-1/3">
           <LoginForm />
         </div>

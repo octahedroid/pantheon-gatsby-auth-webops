@@ -5,7 +5,7 @@ import ArticlePlaceHolder from './article-placeholder';
 import Title from 'gatsby-theme-octahedroid/src/components/title'
 
 // check for user credentials here and fetch content if valid or show login link
-const PrivateContent = ({ id, type, user, token, isLoggedIn, fetchPrivateContent }) => {
+const ArticlePrivateContent = ({ id, type, user, token, isLoggedIn, fetchPrivateContent }) => {
   const [privateContent, setPrivateContent] = useState(null)
   
   useEffect(() => {
@@ -27,8 +27,8 @@ const PrivateContent = ({ id, type, user, token, isLoggedIn, fetchPrivateContent
   return (
     <>
       {(user) && <>
-        {!privateContent&&<ArticlePlaceHolder />}
-        {privateContent&&<div
+        {!privateContent && <ArticlePlaceHolder />}
+        {privateContent && <div
         className="py-1 lg:py-2"
         dangerouslySetInnerHTML={{ __html: privateContent }}
       ></div>}
@@ -41,6 +41,6 @@ const PrivateContent = ({ id, type, user, token, isLoggedIn, fetchPrivateContent
   );
 };
 
-PrivateContent.propTypes = {};
+ArticlePrivateContent.propTypes = {};
 
-export default PrivateContent;
+export default ArticlePrivateContent;

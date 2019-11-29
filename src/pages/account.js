@@ -23,10 +23,10 @@ function AccountPage() {
           return (
             <div className="container mx-auto mt-6 flex flex-wrap">
               <div className="w-full">
-                <PageTitle intro="My Account" title="This is your info" />
+                <PageTitle title="Profile" />
               </div>
               <div className="flex-grow mr-4">
-                {user&&<AccountForm user={user} updateUserProfile={updateUserProfile} token={token} />}
+                {user && <AccountForm user={user} updateUserProfile={updateUserProfile} token={token} />}
               </div>
               <div className="w-1/2 p-4 bg-lightShade">
                 {!_isEmpty(user) &&

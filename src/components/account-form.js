@@ -58,7 +58,7 @@ const AccountForm = ({user, token, updateUserProfile}) => {
       <input
         className="p-3 bg-secondary text-white mt-4 rounded w-full"
         type="submit"
-        value="Update info"
+        value="Update"
         onClick={event => handleSubmit(event)}
       />
     </form>

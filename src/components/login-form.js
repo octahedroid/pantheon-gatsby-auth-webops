@@ -35,7 +35,7 @@ const login = props => {
       {!AuthContext.user && (
         <>
           <h3 className="text-secondary text-xl font-bold mb-3">
-            Enter your username and password below to log in.
+            Enter your username and password.
           </h3>
           {state.processing ? (
             <ArticlePlaceHolder />

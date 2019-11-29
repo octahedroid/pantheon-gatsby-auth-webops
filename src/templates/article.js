@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { graphql } from "gatsby";
 import Layout from "../components/layout";
 import SEO from "gatsby-theme-octahedroid/src/components/seo";
-import PrivateContent from "../components/private-content";
+import ArticlePrivateContent from "../components/article-private";
 import HeroCta from "gatsby-theme-octahedroid/src/components/hero-cta";
 
 import { Auth } from "../auth/context";
@@ -22,7 +22,7 @@ const ArticleTemplate = ({ data }) => {
         <p className="py-3 lg:py-4 text-lg text-black">{post.field_teaser}</p>
         <Auth.Consumer>
           {({ token, user, isLoggedIn, fetchPrivateContent }) => (
-            <PrivateContent
+            <ArticlePrivateContent
               id={post.drupal_id}
               type={post.relationships.node_type.drupal_internal__type}
               token={token}
