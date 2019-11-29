@@ -81,7 +81,7 @@ const Header = ({ scrolled, handleShowSidebar }) => {
                 <Navbar
                   navegation={[
                     {
-                      name: `Welcome ${user.data.attributes.field_display_name || user.data.attributes.name}`,
+                      name: `Welcome ${user.attributes.field_display_name || user.attributes.name}`,
                       route: "/account"
                     }
                   ]}

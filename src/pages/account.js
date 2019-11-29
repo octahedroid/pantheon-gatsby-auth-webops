@@ -15,7 +15,7 @@ function AccountPage() {
         keywords={[`gatsby`, `tailwind`, `react`, `tailwindcss`]}
       />
       <Auth.Consumer>
-        {({ user, token, isLoggedIn }) => {
+        {({ user, token, isLoggedIn, updateUserProfile }) => {
           if (!token) {
             isLoggedIn();
             if (typeof window !== `undefined`) navigate("/login");
@@ -26,7 +26,7 @@ function AccountPage() {
                 <PageTitle intro="My Account" title="This is your info" />
               </div>
               <div className="flex-grow mr-4">
-                {user&&<AccountForm user={user} />}
+                {user&&<AccountForm user={user} updateUserProfile={updateUserProfile} token={token} />}
               </div>
               <div className="w-1/2 p-4 bg-lightShade">
                 {!_isEmpty(user) &&

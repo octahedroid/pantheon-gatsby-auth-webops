@@ -146,3 +146,35 @@ export const fetchPrivateContent = async (id, type, token) => {
     return json;
   }
 };
+
+
+export const updateUserProfile = async (token, userId, payload) => {
+  console.log('update');
+  const response = await fetch(`${process.env.DRUPAL_URL}/api/user/user/${userId}`, {
+    method: 'PATCH',
+    headers: new Headers({
+      'Authorization': `Bearer ${token.access_token}`,
+      'Content-Type':'application/vnd.api+json',
+      'Accept':'application/vnd.api+json'
+    }),
+    body: `{
+      "data": {
+        "type": "user--user",
+        "id" :  "${userId}",
+        "attributes": {
+          "field_display_name": "${payload}"
+        }               
+      }
+    }
+    `
+  });
+
+  if (response.ok) {
+    const json = await response.json();
+    if (json.error) {
+      throw new Error(json.error.message);
+    }
+
+    return json;
+  }
+};
