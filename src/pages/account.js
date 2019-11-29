@@ -18,7 +18,7 @@ function AccountPage({location}) {
         {({ user, token, isLoggedIn, updateUserProfile }) => {
           if (!token) {
             isLoggedIn().then((resp)=>{
-              if (window&&!resp) navigate("/login");
+              if (typeof window !== "undefined"&&!resp) navigate("/login");
             });
           }
           return (

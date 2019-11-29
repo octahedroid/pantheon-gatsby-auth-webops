@@ -19,7 +19,7 @@ const login = ({noRedirect}) => {
         return setState({ ...state, processing: false, error: resp.message})
       }
       setState({ ...state, processing: false, error: false });
-      if(window&&!noRedirect) navigate('/account')
+      if(typeof window !== "undefined"&&!noRedirect) navigate('/account')
     } catch (err) {
       setState({
         processing: false,
