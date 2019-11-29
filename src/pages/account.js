@@ -4,12 +4,12 @@ import _isEmpty from "lodash/isEmpty";
 import Layout from "../components/layout";
 import SEO from "gatsby-theme-octahedroid/src/components/seo";
 import PageTitle from "gatsby-theme-octahedroid/src/components/page-title";
-import { navigate } from "gatsby";
+import { navigate, replace } from "gatsby";
 import { Auth } from "../auth/context";
 import AccountForm from "../components/account-form";
-function AccountPage() {
+function AccountPage({location}) {
   return (
-    <Layout>
+    <Layout location={location}>
       <SEO
         title="Pantheon Auth site"
         keywords={[`gatsby`, `tailwind`, `react`, `tailwindcss`]}
@@ -17,8 +17,9 @@ function AccountPage() {
       <Auth.Consumer>
         {({ user, token, isLoggedIn, updateUserProfile }) => {
           if (!token) {
-            isLoggedIn();
-            if (typeof window !== `undefined`) navigate("/login");
+            isLoggedIn().then((resp)=>{
+              if (window&&!resp) navigate("/login");
+            });
           }
           return (
             <div className="container mx-auto mt-6 flex flex-wrap">

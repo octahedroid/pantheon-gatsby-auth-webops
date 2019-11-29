@@ -5,9 +5,9 @@ import SEO from "gatsby-theme-octahedroid/src/components/seo";
 import PageTitle from "gatsby-theme-octahedroid/src/components/page-title";
 import LoginForm from '../components/login-form';
 
-function LoginPage() {
+function LoginPage({location}) {
   return (
-    <Layout>
+    <Layout location={location}>
       <SEO
         title="Pantheon Auth site"
         keywords={[`gatsby`, `tailwind`, `react`, `tailwindcss`]}

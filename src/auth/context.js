@@ -5,7 +5,8 @@ import {
   handleDrupalLogout,
   fetchUserInfo,
   fetchPrivateContent,
-  updateUserProfile
+  updateUserProfile,
+  getRefreshToken
 } from "./api";
 
 export const Auth = React.createContext(null);
@@ -19,14 +20,15 @@ const AuthContext = ({ children }) => {
         user,
         token,
         handleLogin: async (username, password) => {
-          const token = await handleDrupalLogin(username, password, "gatsby");
+          const resp = await handleDrupalLogin(username, password, "gatsby");
           
-          if (token) {
-            setToken(token);
-            const user = await fetchUserInfo(token);
+          if (resp.access_token) {
+            setToken(resp);
+            const user = await fetchUserInfo(resp);
             setUser(user.data);
+            return user;
           }
-          return user;
+          return resp
         },
         isLoggedIn: async () => {
           const token = await isLoggedIn();
@@ -50,7 +52,10 @@ const AuthContext = ({ children }) => {
         fetchPrivateContent,
         updateUserProfile: async (token, userId, payload) => {
           const user = await updateUserProfile(token, userId, payload)
+          const newToken = await getRefreshToken(token, '')
+          setToken(newToken);
           setUser(user.data);
+          return user.data
         }
       }}
     >

@@ -1,9 +1,10 @@
 import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
+import { navigate, Link } from "gatsby";
 import { Auth } from "../auth/context";
 import ArticlePlaceHolder from './article-placeholder';
 
-const login = props => {
+const login = ({noRedirect}) => {
   const [state, setState] = useState({});
   const AuthContext = useContext(Auth);
 
@@ -14,8 +15,11 @@ const login = props => {
 
     try {
       const resp = await AuthContext.handleLogin(username, password, "");
-      
+      if(resp.error){
+        return setState({ ...state, processing: false, error: resp.message})
+      }
       setState({ ...state, processing: false, error: false });
+      if(window&&!noRedirect) navigate('/account')
     } catch (err) {
       setState({
         processing: false,
@@ -30,7 +34,9 @@ const login = props => {
         <div className="text-red-500 text-lg text-center">{state.error}</div>
       )}
       {AuthContext.user && (
-        <h2 className="text-xl text-green-500">User Logged in</h2>
+        <h2 className="text-xl text-green-500">User Logged in, got to <Link className="underline text-primary" to="/account">
+          my account
+        </Link></h2>
       )}
       {!AuthContext.user && (
         <>

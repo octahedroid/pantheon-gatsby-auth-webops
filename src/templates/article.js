@@ -8,10 +8,10 @@ import HeroCta from "gatsby-theme-octahedroid/src/components/hero-cta";
 
 import { Auth } from "../auth/context";
 // use this template when generating nodes with flag private
-const ArticleTemplate = ({ data }) => {
+const ArticleTemplate = ({ data, location }) => {
   const { post } = data;
   return (
-    <Layout>
+    <Layout location={location}>
       <SEO
         title="Octahedroid starter"
         keywords={[`gatsby`, `tailwind`, `react`, `tailwindcss`]}

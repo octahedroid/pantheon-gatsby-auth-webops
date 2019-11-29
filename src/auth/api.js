@@ -1,5 +1,4 @@
 
-// connect to drupal api
 export const isLoggedIn = () => {
   if (typeof window === 'undefined') {
     return false;
@@ -11,11 +10,9 @@ export const isLoggedIn = () => {
     return false;
   }
 
-  // If we've got an active token, assume the user is logged in.
   if (token !== null && token.expirationDate > Math.floor(Date.now() / 1000)) {
     return token;
   } else {
-    // If not, see if we can get a refresh token.
     getRefreshToken(token, '').then((token) => {
       if (token !== null) {
         return token;
@@ -59,15 +56,15 @@ const fetchOauthToken = async (username, password, scope) => {
     }),
     body: formData,
   });
-
+  
   if (response.ok) {
     const json = await response.json();
-
-    if (json.error) {
-      throw new Error(json.error.message);
-    }
-
     return storeToken(json);
+  }
+
+  if (!response.ok) {
+    const json = await response.json();
+    return json
   }
 };
 
@@ -149,7 +146,7 @@ export const fetchPrivateContent = async (id, type, token) => {
 
 
 export const updateUserProfile = async (token, userId, payload) => {
-  console.log('update');
+  
   const response = await fetch(`${process.env.DRUPAL_URL}/api/user/user/${userId}`, {
     method: 'PATCH',
     headers: new Headers({

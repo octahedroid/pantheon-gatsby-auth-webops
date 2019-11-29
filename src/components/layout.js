@@ -7,7 +7,7 @@ import ThemeProvider from "gatsby-theme-octahedroid/src/components/theme-provide
 import theme from "../../theme";
 import { Auth } from "../auth/context";
 
-function Layout({ children, title }) {
+function Layout({ children, title, location }) {
   const [scrolledMenu, setScrolledMenu] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
   useEffect(() => {
@@ -35,6 +35,7 @@ function Layout({ children, title }) {
             <div className="pt-5">
               <SEO title={title} />
               <Header
+                location={location}
                 scrolled={scrolledMenu}
                 handleShowSidebar={handleShowSidebar}
               />
