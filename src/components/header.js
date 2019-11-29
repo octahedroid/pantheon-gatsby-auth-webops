@@ -9,7 +9,7 @@ import Navbar from "gatsby-theme-octahedroid/src/components/navbar";
 import { Auth } from "../auth/context";
 import LogoutLink from "./logout-link";
 
-const Header = ({ scrolled, handleShowSidebar }) => {
+const Header = ({ scrolled, handleShowSidebar, location }) => {
   const { theme } = useThemeUI();
 
   const pages = useStaticQuery(graphql`
@@ -56,9 +56,10 @@ const Header = ({ scrolled, handleShowSidebar }) => {
                 navegation={[
                   {
                     name: "Home",
-                    route: "/"
+                    route: "/",
+                    active: location.pathname === '/'
                   },
-                  ...(pages.allNodePage.edges.map(({node})=>({name: node.title, route: node.path.alias})))
+                  ...(pages.allNodePage.edges.map(({node})=>({name: node.title, route: node.path.alias, active: location.pathname === node.path.alias})))
                 ]}
               />
             </div>
@@ -72,7 +73,8 @@ const Header = ({ scrolled, handleShowSidebar }) => {
                   navegation={[
                     {
                       name: "Login",
-                      route: "/login"
+                      route: "/login",
+                      active: location.pathname === '/login'
                     }
                   ]}
                 />
@@ -82,7 +84,8 @@ const Header = ({ scrolled, handleShowSidebar }) => {
                   navegation={[
                     {
                       name: `Welcome ${user.attributes.field_display_name || user.attributes.name}`,
-                      route: "/account"
+                      route: "/account",
+                      active: location.pathname === '/account'
                     }
                   ]}
                 />

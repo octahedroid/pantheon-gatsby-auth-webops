@@ -4,38 +4,44 @@ import LoginForm from './login-form';
 import ArticlePlaceHolder from './article-placeholder';
 import Title from 'gatsby-theme-octahedroid/src/components/title'
 
-// check for user credentials here and fetch content if valid or show login link
+
 const ArticlePrivateContent = ({ id, type, user, token, isLoggedIn, fetchPrivateContent }) => {
   const [privateContent, setPrivateContent] = useState(null)
   
   useEffect(() => {
     if(!token){
-      isLoggedIn()
-      
+      isLoggedIn().then((resp)=>{
+        if(resp.access_token){
+          fetchExtraContent()
+        }
+      })
     }
     if(token){
-      fetchPrivateContent(id, type, token).then((response)=>{
-        if(response.data.attributes.field_body)
-          setPrivateContent(response.data.attributes.field_body.processed)
-      })
+      fetchExtraContent()
     }
 
   });
-  // use contentId to fetch content when hidreted and only if auth in valid
-  // use Context.fetchPrivateContent
+  
+  const fetchExtraContent = () => {
+    fetchPrivateContent(id, type, token).then((response)=>{
+      if(response.data.attributes.field_body)
+        setPrivateContent(response.data.attributes.field_body.processed)
+    })
+  }
 
   return (
     <>
+      {!user&&token && <ArticlePlaceHolder />}
       {(user) && <>
-        {!privateContent && <ArticlePlaceHolder />}
+        {(user&&token&&!privateContent) && <ArticlePlaceHolder />}
         {privateContent && <div
         className="py-1 lg:py-2"
         dangerouslySetInnerHTML={{ __html: privateContent }}
       ></div>}
       </>}
-      {(!user) && <div className="bg-lightShade p-4 rounded">
+      {(!token&&!user) && <div className="bg-lightShade p-4 rounded">
         <Title as="h3">Sign in with your Drupal account to read the content.</Title>
-        <LoginForm />
+        <LoginForm noRedirect />
       </div>}
     </>
   );
