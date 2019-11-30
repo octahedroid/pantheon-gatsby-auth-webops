@@ -40,7 +40,7 @@ const ArticlePrivateContent = ({ id, type, user, token, isLoggedIn, fetchPrivate
       ></div>}
       </>}
       {(!token&&!user) && <div className="bg-lightShade p-4 rounded">
-        <Title as="h3">Sign in with your Drupal account to read the content.</Title>
+        <Title as="h3">Login to read full article.</Title>
         <LoginForm noRedirect />
       </div>}
     </>
