@@ -17,7 +17,10 @@ const ArticleTemplate = ({ data, location }) => {
         keywords={[`gatsby`, `tailwind`, `react`, `tailwindcss`]}
       />
       <div className="container mx-auto">
-        <HeroCta title={post.title} intro={post.created} />
+        <HeroCta
+          title={post.title}
+          intro={`${post.relationships.node_type.name} | ${post.created}`}
+        />
         <hr className="border-b-2 mx-auto w-2/3 border-gray-200 block h-1" />
         <p className="py-3 lg:py-4 text-lg text-black">{post.field_teaser}</p>
         <Auth.Consumer>
@@ -53,6 +56,7 @@ export const pageQuery = graphql`
       relationships {
         node_type {
           drupal_internal__type
+          name
         }
       }
       created(formatString: "MMM d, YYYY")
