@@ -18,7 +18,7 @@ const ArticleTemplate = ({ data, location }) => {
       <div className="container mx-auto">
         <HeroCta
           title={page.title}
-          intro={page.created}
+          intro={`${page.relationships.node_type.name} | ${page.created}`}
         />
         <hr className="border-b-2 mx-auto w-2/3 border-gray-200 block h-1" />
         <div
@@ -45,6 +45,11 @@ export const pageQuery = graphql`
       title
       path {  
         alias
+      }
+      relationships {
+        node_type {
+          name
+        }
       }
       body{
         processed
