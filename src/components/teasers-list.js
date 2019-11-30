@@ -14,6 +14,11 @@ const TeasersList = () => {
             path {
               alias
             }
+            relationships {
+              node_type {
+                name
+              }
+            }
             title
             field_teaser
           }
@@ -23,11 +28,12 @@ const TeasersList = () => {
   `);
   return (
     <div className="bg-lightShade">
-      <div className="container mx-auto my-4">
+      <div className="container mx-auto my-4 flex">
         {posts &&
           posts.allNodeArticle.edges.map(({ node }) => (
             <div className="w-full lg:w-1/3">
               <Card
+                intro={node.relationships.node_type.name}
                 title={node.title}
                 image="hero.png"
                 link={node.path.alias}
