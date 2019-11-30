@@ -59,7 +59,6 @@ const Header = ({ scrolled, handleShowSidebar, location }) => {
                     route: "/",
                     active: location.pathname === '/'
                   },
-                  ...(pages.allNodePage.edges.map(({node})=>({name: node.title, route: node.path.alias, active: location.pathname === node.path.alias})))
                 ]}
               />
             </div>
