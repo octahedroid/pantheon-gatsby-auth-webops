@@ -40,7 +40,7 @@ const ProtectedRoute = ({ component: Component, user, token, isLoggedIn, fetchPr
       {(user) && <>
         {(token && !protectedContent) && <ArticlePlaceHolder />}
         {protectedContent && 
-          <div>
+          <>
             <HeroCta
               title={protectedContent.data.attributes.title}
               intro={`Protected | ${protectedContent.data.attributes.created}`}
@@ -50,7 +50,7 @@ const ProtectedRoute = ({ component: Component, user, token, isLoggedIn, fetchPr
               className="py-1 lg:py-2"
               dangerouslySetInnerHTML={{ __html: protectedContent.data.attributes.body.processed }}
             />
-          </div>
+          </>
         }
       </>}
       {!user && !token && !protectedContent && !isLoading &&
