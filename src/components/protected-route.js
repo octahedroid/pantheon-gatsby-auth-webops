@@ -13,6 +13,8 @@ const ProtectedRoute = ({ component: Component, user, token, isLoggedIn, fetchPr
       isLoggedIn().then((resp)=>{
         if(resp.access_token){
           fetchContent()
+        } else {
+          setIsLoading(false)
         }
       })
     }
