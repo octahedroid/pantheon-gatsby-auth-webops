@@ -24,7 +24,6 @@ const ProtectedRoute = ({ component: Component, user, token, isLoggedIn, fetchPr
   const fetchContent = () => {
     fetchProtectedContent(rest.uri, token).then((response)=>{
       if(response && response.data) {
-        console.log(response)
         setProtectedContent(response)
       }
       else {
