@@ -7,44 +7,52 @@ import Title from 'gatsby-theme-octahedroid/src/components/title'
 
 const ArticleProtectedContent = ({ id, type, user, token, isLoggedIn, fetchArticleProtectedContent }) => {
   const [protectedContent, setProtectedContent] = useState(null)
+  const [isLoading, setIsLoading] = useState(true);
   
   useEffect(() => {
     if(!token){
       isLoggedIn().then((resp)=>{
         if(resp.access_token){
           fetchExtraContent()
+        } else {
+          setIsLoading(false)
         }
       })
     }
 
-    if(token){
+    if(token && !protectedContent){
       fetchExtraContent()
     }
   });
   
   const fetchExtraContent = () => {
     fetchArticleProtectedContent(id, type, token).then((response)=>{
-      if(response.data.attributes.field_body)
+      if(response.data.attributes.field_body) {
         setProtectedContent(response.data.attributes.field_body.processed)
+      }
+      setIsLoading(false)
     })
+
   }
 
   return (
     <>
-      {!user&&token && <ArticlePlaceHolder />}
+      {!user && token && <ArticlePlaceHolder />}
       {(user) && <>
-        {(user&&token&&!protectedContent) && <ArticlePlaceHolder />}
+        {(token && !protectedContent) && <ArticlePlaceHolder />}
         {protectedContent && 
-        <div
-          className="py-1 lg:py-2"
-          dangerouslySetInnerHTML={{ __html: protectedContent }}
-        />
+          <div
+            className="py-1 lg:py-2"
+            dangerouslySetInnerHTML={{ __html: protectedContent }}
+          />
         }
       </>}
-      {(!token&&!user) && <div className="bg-lightShade p-4 rounded">
-        <Title as="h3">Login to read full article.</Title>
-        <LoginForm noRedirect />
-      </div>}
+      {!user && !token && !protectedContent && !isLoading &&
+          <div className="bg-lightShade p-4 rounded">
+            <Title as="h3">Login to read full article.</Title>
+            <LoginForm noRedirect />
+          </div>
+        }
     </>
   );
 };

@@ -16,32 +16,20 @@ function App({location}) {
       />
       <Auth.Consumer>
         {({ token, user, isLoggedIn, fetchProtectedContent }) => {
-
-          if (!token) {
-            isLoggedIn().then((resp)=>{
-              if (typeof window !== "undefined" && !resp) {
-                navigate("/404");
-                return;
-              }
-            });
-          }
-
-          if (user && token && isLoggedIn){
-            return (
-              <div className="container mx-auto">
-                <Router>
-                  <ProtectedRoute 
-                    path="/protected/:slug" 
-                    component={TeaserList}
-                    user={user}
-                    token={token}
-                    isLoggedIn={isLoggedIn}
-                    fetchProtectedContent={fetchProtectedContent}
-                  />
-                </Router>
-              </div>
-            )
-          }
+          return (
+            <div className="container mx-auto">
+              <Router>
+                <ProtectedRoute
+                  path="/protected/:slug"
+                  component={TeaserList}
+                  user={user}
+                  token={token}
+                  isLoggedIn={isLoggedIn}
+                  fetchProtectedContent={fetchProtectedContent}
+                />
+              </Router>
+            </div>
+          )
         }}
       
       </Auth.Consumer>
