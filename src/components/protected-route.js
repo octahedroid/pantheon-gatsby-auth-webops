@@ -6,6 +6,7 @@ import HeroCta from "gatsby-theme-octahedroid/src/components/hero-cta";
 
 const ProtectedRoute = ({ component: Component, user, token, isLoggedIn, fetchProtectedContent, ...rest }) => {
   const [protectedContent, setProtectedContent] = useState(null)
+  const [isLoading, setIsLoading] = useState(true);
   
   useEffect(() => {
     if(!token){
@@ -26,30 +27,31 @@ const ProtectedRoute = ({ component: Component, user, token, isLoggedIn, fetchPr
       if(response && response.data) {
         setProtectedContent(response)
       }
-      else {
-        navigate("/404");
-        return;
-      }
+      setIsLoading(false)
     })
   }
 
   return (
     <>
-      {!user&&token && <ArticlePlaceHolder />}
+      {!user && token && <ArticlePlaceHolder />}
       {(user) && <>
-        {(user&&token&&!protectedContent) && <ArticlePlaceHolder />}
-        {protectedContent && <div>
-          <HeroCta
-            title={protectedContent.data.attributes.title}
-            intro={`Protected | ${protectedContent.data.attributes.created}`}
-          />
-          <hr className="border-b-2 mx-auto w-2/3 border-gray-200 block h-1" />
-          <div
-            className="py-1 lg:py-2"
-            dangerouslySetInnerHTML={{ __html: protectedContent.data.attributes.body.processed }}
-          />
-        </div>
-      }
+        {(token && !protectedContent) && <ArticlePlaceHolder />}
+        {protectedContent && 
+          <div>
+            <HeroCta
+              title={protectedContent.data.attributes.title}
+              intro={`Protected | ${protectedContent.data.attributes.created}`}
+            />
+            <hr className="border-b-2 mx-auto w-2/3 border-gray-200 block h-1" />
+            <div
+              className="py-1 lg:py-2"
+              dangerouslySetInnerHTML={{ __html: protectedContent.data.attributes.body.processed }}
+            />
+          </div>
+        }
+        {!protectedContent && !isLoading &&
+          navigate("/404")
+        }
       </>}
     </>
   );
