@@ -4,7 +4,7 @@ import _isEmpty from "lodash/isEmpty";
 import Layout from "../components/layout";
 import SEO from "gatsby-theme-octahedroid/src/components/seo";
 import PageTitle from "gatsby-theme-octahedroid/src/components/page-title";
-import { navigate, replace } from "gatsby";
+import { navigate } from "gatsby";
 import { Auth } from "../auth/context";
 import AccountForm from "../components/account-form";
 function AccountPage({location}) {

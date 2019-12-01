@@ -5,8 +5,8 @@ import ArticlePlaceHolder from './article-placeholder';
 import Title from 'gatsby-theme-octahedroid/src/components/title'
 
 
-const ArticlePrivateContent = ({ id, type, user, token, isLoggedIn, fetchPrivateContent }) => {
-  const [privateContent, setPrivateContent] = useState(null)
+const ArticleProtectedContent = ({ id, type, user, token, isLoggedIn, fetchArticleProtectedContent }) => {
+  const [protectedContent, setProtectedContent] = useState(null)
   
   useEffect(() => {
     if(!token){
@@ -16,16 +16,16 @@ const ArticlePrivateContent = ({ id, type, user, token, isLoggedIn, fetchPrivate
         }
       })
     }
+
     if(token){
       fetchExtraContent()
     }
-
   });
   
   const fetchExtraContent = () => {
-    fetchPrivateContent(id, type, token).then((response)=>{
+    fetchArticleProtectedContent(id, type, token).then((response)=>{
       if(response.data.attributes.field_body)
-        setPrivateContent(response.data.attributes.field_body.processed)
+        setProtectedContent(response.data.attributes.field_body.processed)
     })
   }
 
@@ -33,11 +33,13 @@ const ArticlePrivateContent = ({ id, type, user, token, isLoggedIn, fetchPrivate
     <>
       {!user&&token && <ArticlePlaceHolder />}
       {(user) && <>
-        {(user&&token&&!privateContent) && <ArticlePlaceHolder />}
-        {privateContent && <div
-        className="py-1 lg:py-2"
-        dangerouslySetInnerHTML={{ __html: privateContent }}
-      ></div>}
+        {(user&&token&&!protectedContent) && <ArticlePlaceHolder />}
+        {protectedContent && 
+        <div
+          className="py-1 lg:py-2"
+          dangerouslySetInnerHTML={{ __html: protectedContent }}
+        />
+        }
       </>}
       {(!token&&!user) && <div className="bg-lightShade p-4 rounded">
         <Title as="h3">Login to read full article.</Title>
@@ -47,6 +49,6 @@ const ArticlePrivateContent = ({ id, type, user, token, isLoggedIn, fetchPrivate
   );
 };
 
-ArticlePrivateContent.propTypes = {};
+ArticleProtectedContent.propTypes = {};
 
-export default ArticlePrivateContent;
+export default ArticleProtectedContent;
