@@ -52,10 +52,10 @@ const ProtectedRoute = ({ component: Component, user, token, isLoggedIn, fetchPr
             />
           </div>
         }
-        {!token && !protectedContent && !isLoading &&
-          navigate("/404")
-        }
       </>}
+      {!user && !token && !protectedContent && !isLoading &&
+        navigate("/404")
+      }
     </>
   );
 }
