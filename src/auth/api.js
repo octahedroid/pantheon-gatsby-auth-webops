@@ -40,7 +40,6 @@ export const getRefreshToken = async (token) => {
 };
 
 const fetchOauthToken = async (username, password) => {
-  
   let formData = new FormData();
   formData.append('grant_type', 'password');
   formData.append('client_id', process.env.CLIENT_ID);
@@ -122,9 +121,8 @@ export const fetchUserInfo = async (token) => {
   }
 };
 
-export const fetchPrivateContent = async (id, type, token) => {
-  
-  const response = await fetch(`${process.env.DRUPAL_URL}/api/node/${type}/${id}`, {
+const fetchNodeContent = async (uri, token) => {
+  const response = await fetch(uri, {
     method: 'get',
     headers: new Headers({
       'Authorization': `Bearer ${token.access_token}`,
@@ -140,8 +138,33 @@ export const fetchPrivateContent = async (id, type, token) => {
 
     return json;
   }
+}
+
+export const fetchArticleProtectedContent = async (id, type, token) => {
+  const uri = `${process.env.DRUPAL_URL}/api/node/${type}/${id}`;
+
+  return fetchNodeContent(uri, token);
 };
 
+export const fetchProtectedContent = async (path, token) => {
+  const response = await fetch(`${process.env.DRUPAL_URL}/router/translate-path?path=${path}`, {
+    method: 'get',
+    headers: new Headers({
+      'Authorization': `Bearer ${token.access_token}`,
+      'Accept': 'application/json',
+    }),
+  });
+
+  if (response.ok) {
+    const json = await response.json();
+
+    if (json.error) {
+      throw new Error(json.error.message);
+    }
+
+    return fetchNodeContent(json.jsonapi.individual, token);
+  }
+};
 
 export const updateUserProfile = async (token, userId, payload) => {
   

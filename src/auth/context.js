@@ -4,7 +4,8 @@ import {
   isLoggedIn,
   handleDrupalLogout,
   fetchUserInfo,
-  fetchPrivateContent,
+  fetchArticleProtectedContent,
+  fetchProtectedContent,
   updateUserProfile,
   getRefreshToken
 } from "./api";
@@ -49,7 +50,8 @@ const AuthContext = ({ children }) => {
           const user = await fetchUserInfo(token);
           setUser(user.data);
         },
-        fetchPrivateContent,
+        fetchArticleProtectedContent,
+        fetchProtectedContent,
         updateUserProfile: async (token, userId, payload) => {
           const user = await updateUserProfile(token, userId, payload)
           const newToken = await getRefreshToken(token, '')
