@@ -17,14 +17,14 @@ function App({location}) {
       <Auth.Consumer>
         {({ token, user, isLoggedIn, fetchProtectedContent }) => {
 
-          if (!token) {
-            isLoggedIn().then((resp)=>{
-              if (typeof window !== "undefined" && !resp) {
-                navigate("/404");
-                return;
-              }
-            });
-          }
+          // if (!token) {
+          //   isLoggedIn().then((resp)=>{
+          //     if (typeof window !== "undefined" && !resp) {
+          //       navigate("/404");
+          //       return;
+          //     }
+          //   });
+          // }
 
           if (user && token && isLoggedIn){
             return (
