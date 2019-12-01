@@ -19,18 +19,19 @@ const ProtectedRoute = ({ component: Component, user, token, isLoggedIn, fetchPr
       })
     }
 
-    if(token && !protectedContent){
+    if(token && isLoading){
       fetchContent()
     }
   });
 
   const fetchContent = () => {
-    fetchProtectedContent(rest.uri, token).then((response)=>{
+    fetchProtectedContent(rest.uri, token)
+    .then((response)=>{
       if(response && response.data) {
         setProtectedContent(response)
       }
-      setIsLoading(false)
     })
+    .finally(setIsLoading(false))
   }
 
   return (
@@ -51,7 +52,7 @@ const ProtectedRoute = ({ component: Component, user, token, isLoggedIn, fetchPr
             />
           </div>
         }
-        {!protectedContent && !isLoading &&
+        {!token && !protectedContent && !isLoading &&
           navigate("/404")
         }
       </>}
