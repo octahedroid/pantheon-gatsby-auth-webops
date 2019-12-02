@@ -8,6 +8,7 @@ import TeaserList from '../components/teasers-list';
 import { Auth } from "../auth/context";
 
 function App({location}) {
+
   return (
     <Layout location={location}>
       <SEO

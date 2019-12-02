@@ -91,7 +91,6 @@ const refreshOauthToken = async (token) => {
 
       return storeToken(json);
     }
-
   }
 };
 

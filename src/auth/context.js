@@ -21,7 +21,7 @@ const AuthContext = ({ children }) => {
         user,
         token,
         handleLogin: async (username, password) => {
-          const resp = await handleDrupalLogin(username, password, "gatsby");
+          const resp = await handleDrupalLogin(username, password);
           
           if (resp.access_token) {
             setToken(resp);

@@ -55,10 +55,10 @@ const Header = ({ scrolled, handleShowSidebar, location }) => {
               <Navbar
                 navegation={[
                   {
-                    name: "Home",
-                    route: "/",
-                    active: location.pathname === '/'
-                  },
+                    name: `Protected`,
+                    route: "/protected/not-public-node ",
+                    active: location.pathname === '/protected/not-public-node'
+                  }
                 ]}
               />
             </div>
@@ -67,6 +67,7 @@ const Header = ({ scrolled, handleShowSidebar, location }) => {
               className="w-full flex-shrink lg:flex lg:items-center lg:w-auto hidden lg:block bg-white text-black z-20"
               id="nav-content"
             >
+
               {!user && (
                 <Navbar
                   navegation={[
@@ -82,7 +83,7 @@ const Header = ({ scrolled, handleShowSidebar, location }) => {
                 <Navbar
                   navegation={[
                     {
-                      name: `Welcome ${user.attributes.field_display_name || user.attributes.name}`,
+                      name: `${user.attributes.field_display_name || user.attributes.name}`,
                       route: "/account",
                       active: location.pathname === '/account'
                     }
