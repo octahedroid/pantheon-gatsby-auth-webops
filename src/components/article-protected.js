@@ -50,7 +50,7 @@ const ArticleProtectedContent = ({ id, type, user, token, isLoggedIn, fetchArtic
             <Title as="h3">Login to read full article.</Title>
             <LoginForm noRedirect />
           </div>
-        }
+      }
     </>
   );
 };

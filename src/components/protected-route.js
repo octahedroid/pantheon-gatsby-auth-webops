@@ -7,6 +7,7 @@ import HeroCta from "gatsby-theme-octahedroid/src/components/hero-cta";
 const ProtectedRoute = ({ user, token, isLoggedIn, fetchProtectedContent, ...rest }) => {
   const [protectedContent, setProtectedContent] = useState(null)
   const [isLoading, setIsLoading] = useState(true);
+  const [isRedirect, setIsRedirect] = useState(false);
   
   useEffect(() => {
     if(!token){
@@ -15,12 +16,11 @@ const ProtectedRoute = ({ user, token, isLoggedIn, fetchProtectedContent, ...res
           fetchContent()
         } else {
           setIsLoading(false)
-          navigate("/404")
         }
       })
     }
 
-    if(token && isLoading){
+    if(token && !protectedContent){
       fetchContent()
     }
   });
@@ -35,7 +35,7 @@ const ProtectedRoute = ({ user, token, isLoggedIn, fetchProtectedContent, ...res
     })
     .catch(error => {
       setIsLoading(false)
-      navigate("/404")
+      setIsRedirect(true)
     })
     .finally(setIsLoading(false))
   }
@@ -45,7 +45,7 @@ const ProtectedRoute = ({ user, token, isLoggedIn, fetchProtectedContent, ...res
       {!user && token && <ArticlePlaceHolder />}
       {(user) && <>
         {(token && !protectedContent) && <ArticlePlaceHolder />}
-        {token && protectedContent && !isLoading && 
+        {protectedContent &&
           <>
             <div className="container mx-auto">
               <HeroCta
@@ -61,12 +61,14 @@ const ProtectedRoute = ({ user, token, isLoggedIn, fetchProtectedContent, ...res
           </>
         }
       </>}
+      {(!user && !token && !protectedContent && !isLoading) &&
+        navigate("/404")
+      }
+      { isRedirect &&
+        navigate("/404")
+      }
     </>
   );
-}
-
-ProtectedRoute.propTypes = {
-  component: PropTypes.any.isRequired,
 }
 
 export default ProtectedRoute
