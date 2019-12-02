@@ -14,7 +14,8 @@ const myTheme = {
   },
   height:{
     ...baseTheme.height,
-    hero: '700px'
+    hero: '700px',
+    '90': '90vh'
   },
   styles: {
     ...baseTheme.styles,

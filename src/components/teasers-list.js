@@ -41,7 +41,7 @@ const TeasersList = () => {
   `);
 
   return (
-    <div className="bg-lightShade">
+    <div className="bg-gray-100 min-h-screen pb-4">
       <div className="container mx-auto my-4 flex">
         {posts && posts.allNodePage.edges.map(({ node }) => (
               <div className="w-full lg:w-1/2">
