@@ -6,6 +6,7 @@ import SEO from "gatsby-theme-octahedroid/src/components/seo";
 import ThemeProvider from "gatsby-theme-octahedroid/src/components/theme-provider";
 import theme from "../../theme";
 import { Auth } from "../auth/context";
+import Footer from './footer';
 
 function Layout({ children, title, location }) {
   const [scrolledMenu, setScrolledMenu] = useState(false);
@@ -27,7 +28,7 @@ function Layout({ children, title, location }) {
   return (
     <ThemeProvider theme={theme}>
       <Auth.Consumer>
-        {({ token, isLoggedIn }) => {
+        {({ token, isLoggedIn, user }) => {
           if(!token){
             isLoggedIn()
           }
@@ -39,7 +40,10 @@ function Layout({ children, title, location }) {
                 scrolled={scrolledMenu}
                 handleShowSidebar={handleShowSidebar}
               />
+              <div className="min-h-screen">
               {children}
+              </div>
+              <Footer user={user} />
             </div>
           );
         }}
