@@ -4,7 +4,6 @@ import LoginForm from './login-form';
 import ArticlePlaceHolder from './article-placeholder';
 import Title from 'gatsby-theme-octahedroid/src/components/title'
 
-
 const ArticleProtectedContent = ({ id, type, user, token, isLoggedIn, fetchArticleProtectedContent }) => {
   const [protectedContent, setProtectedContent] = useState(null)
   const [isLoading, setIsLoading] = useState(true);
@@ -32,7 +31,6 @@ const ArticleProtectedContent = ({ id, type, user, token, isLoggedIn, fetchArtic
       }
       setIsLoading(false)
     })
-
   }
 
   return (

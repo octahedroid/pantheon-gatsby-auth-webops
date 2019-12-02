@@ -28,8 +28,8 @@ const ArticleTemplate = ({ data, location }) => {
             <ArticleProtectedContent
               id={post.drupal_id}
               type={post.relationships.node_type.drupal_internal__type}
-              token={token}
               user={user}
+              token={token}
               isLoggedIn={isLoggedIn}
               fetchArticleProtectedContent={fetchArticleProtectedContent}
             />

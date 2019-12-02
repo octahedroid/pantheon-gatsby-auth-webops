@@ -17,21 +17,17 @@ function App({location}) {
       <Auth.Consumer>
         {({ token, user, isLoggedIn, fetchProtectedContent }) => {
           return (
-            <div className="container mx-auto">
-              <Router>
-                <ProtectedRoute
-                  path="/protected/:slug"
-                  component={TeaserList}
-                  user={user}
-                  token={token}
-                  isLoggedIn={isLoggedIn}
-                  fetchProtectedContent={fetchProtectedContent}
-                />
-              </Router>
-            </div>
+            <Router>
+              <ProtectedRoute
+                path="/protected/:slug"
+                user={user}
+                token={token}
+                isLoggedIn={isLoggedIn}
+                fetchProtectedContent={fetchProtectedContent}
+              />
+            </Router>
           )
         }}
-      
       </Auth.Consumer>
     </Layout>
 

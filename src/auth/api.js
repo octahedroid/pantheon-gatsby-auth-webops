@@ -164,6 +164,9 @@ export const fetchProtectedContent = async (path, token) => {
 
     return fetchNodeContent(json.jsonapi.individual, token);
   }
+  else {
+    throw new Error('Invalid URI');
+  }
 };
 
 export const updateUserProfile = async (token, userId, payload) => {

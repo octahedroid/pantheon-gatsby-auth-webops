@@ -4,7 +4,7 @@ import { navigate } from "gatsby";
 import ArticlePlaceHolder from './article-placeholder';
 import HeroCta from "gatsby-theme-octahedroid/src/components/hero-cta";
 
-const ProtectedRoute = ({ component: Component, user, token, isLoggedIn, fetchProtectedContent, ...rest }) => {
+const ProtectedRoute = ({ user, token, isLoggedIn, fetchProtectedContent, ...rest }) => {
   const [protectedContent, setProtectedContent] = useState(null)
   const [isLoading, setIsLoading] = useState(true);
   
@@ -15,6 +15,7 @@ const ProtectedRoute = ({ component: Component, user, token, isLoggedIn, fetchPr
           fetchContent()
         } else {
           setIsLoading(false)
+          navigate("/404")
         }
       })
     }
@@ -25,11 +26,16 @@ const ProtectedRoute = ({ component: Component, user, token, isLoggedIn, fetchPr
   });
 
   const fetchContent = () => {
+    if (!token) return;
     fetchProtectedContent(rest.uri, token)
     .then((response)=>{
       if(response && response.data) {
-        setProtectedContent(response)
+        setProtectedContent(response.data)
       }
+    })
+    .catch(error => {
+      setIsLoading(false)
+      navigate("/404")
     })
     .finally(setIsLoading(false))
   }
@@ -39,23 +45,22 @@ const ProtectedRoute = ({ component: Component, user, token, isLoggedIn, fetchPr
       {!user && token && <ArticlePlaceHolder />}
       {(user) && <>
         {(token && !protectedContent) && <ArticlePlaceHolder />}
-        {protectedContent && 
+        {token && protectedContent && !isLoading && 
           <>
-            <HeroCta
-              title={protectedContent.data.attributes.title}
-              intro={`Protected | ${protectedContent.data.attributes.created}`}
-            />
-            <hr className="border-b-2 mx-auto w-2/3 border-gray-200 block h-1" />
-            <div
-              className="py-1 lg:py-2"
-              dangerouslySetInnerHTML={{ __html: protectedContent.data.attributes.body.processed }}
-            />
+            <div className="container mx-auto">
+              <HeroCta
+                title={protectedContent.attributes.title}
+                intro={`Protected | ${protectedContent.attributes.created}`}
+              />
+              <hr className="border-b-2 mx-auto w-2/3 border-gray-200 block h-1" />
+              <div
+                className="py-1 lg:py-2"
+                dangerouslySetInnerHTML={{ __html: protectedContent.attributes.body.processed }}
+              />
+            </div>
           </>
         }
       </>}
-      {!user && !token && !protectedContent && !isLoading &&
-        navigate("/404")
-      }
     </>
   );
 }
