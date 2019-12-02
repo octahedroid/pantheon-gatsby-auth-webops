@@ -26,18 +26,19 @@ const ProtectedRoute = ({ user, token, isLoggedIn, fetchProtectedContent, ...res
   });
 
   const fetchContent = () => {
-    if (!token) return;
     fetchProtectedContent(rest.uri, token)
     .then((response)=>{
-      if(response && response.data) {
+      if(response.data) {
         setProtectedContent(response.data)
       }
+      setIsLoading(false)
     })
     .catch(error => {
-      setIsLoading(false)
-      setIsRedirect(true)
+      if (error.message === "404"){
+        setIsRedirect(true)
+        setIsLoading(false)
+      }
     })
-    .finally(setIsLoading(false))
   }
 
   return (

@@ -165,7 +165,7 @@ export const fetchProtectedContent = async (path, token) => {
     return fetchNodeContent(json.jsonapi.individual, token);
   }
   else {
-    throw new Error('Invalid URI');
+    throw new Error(response.status);
   }
 };
 
